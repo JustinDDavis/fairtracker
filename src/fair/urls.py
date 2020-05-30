@@ -19,5 +19,5 @@ from django.urls import path, include
 from fair import views
 
 urlpatterns = [
-    # path('', views.index, name='home'),
+    path('', views.index, name='fair_home'),
 ]
