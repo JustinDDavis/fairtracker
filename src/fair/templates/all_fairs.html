@@ -15,7 +15,18 @@ You're Logged in!
 {% endblock %}
 
 {% block content %}
+    <p>{{ current_user_fairs }}</p>
     {% for fair in current_user_fairs %}
-        <p>{{fair.name}}</p>
+        <p>{{ fair }}</p>
     {% endfor %}
+
+
+    <form method="POST" action="{% url 'fair_home' %}">
+        {% csrf_token %}
+        {{ form }}
+
+        <input type="submit" value="AddFair">
+    </form>
+
+
 {% endblock %}
