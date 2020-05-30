@@ -16,12 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from homepage import views
+from fair import views
 
 urlpatterns = [
-    path('', include('homepage.urls')),
-    # path('fair/', include('fair.urls')),
-    path('admin/', admin.site.urls),
-    path('', include('social_django.urls')),
-    path('', include('auth0login.urls')),
+    # path('', views.index, name='home'),
 ]
