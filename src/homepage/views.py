@@ -12,7 +12,7 @@ def index(request):
             'picture': auth0user.extra_data['picture'],
             'email': auth0user.extra_data['email'],
         }
-        return render(request, 'secure.html', {
+        return render(request, 'user_homescreen.html', {
             'auth0User': auth0user,
             'userdata': json.dumps(userdata, indent=4)
         })
