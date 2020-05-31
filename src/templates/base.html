@@ -23,9 +23,9 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           {% if not user.is_authenticated %}
-            <li class="nav-item active">
+            <!-- <li class="nav-item active">
               <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
-            </li>
+            </li> -->
           {% else %}
             <li class="nav-item active">
               <a class="nav-link" href="{% url 'fair_home' %}">Your Fairs</a>
@@ -42,11 +42,13 @@
       </div>
     </nav>
 
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
 
 
-
-    {% block content %}
-    {% endblock %}
+    
 
    <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

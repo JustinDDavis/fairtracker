@@ -143,5 +143,3 @@ AUTHENTICATION_BACKENDS = {
 
 LOGIN_URL = '/login/auth0'
 LOGIN_REDIRECT_URL = '/'
-
-SITENAME = "FairTracker"

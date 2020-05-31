@@ -19,5 +19,5 @@ from django.urls import path, include
 from homepage import views
 
 urlpatterns = [
-    path('', views.index, name="home"),
+    path('', views.index, name="home"), # Path to the home page '/'
 ]
