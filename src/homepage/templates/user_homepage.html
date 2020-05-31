@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+You're Logged in! 
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-4">
+            <h3>Fairs</h3>
+            <ul class="list-group">
+              {% for fair in fairs %}
+              <li class="list-group-item">{{ fair.name }}</li>
+              {% endfor %}
+                
+            </ul>
+        </div>
+        <div class="col-sm">
+          One of three columns
+        </div>
+      </div>
+
+    
+{% endblock %}

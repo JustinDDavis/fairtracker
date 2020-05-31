@@ -20,4 +20,5 @@ from homepage import views
 
 urlpatterns = [
     path('', views.index, name="home"), # Path to the home page '/'
+    path('dashboard/', views.user_homepage, name="user_homepage"), # Path to the home page '/'
 ]
