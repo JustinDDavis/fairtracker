@@ -5,6 +5,8 @@ from .models import Fair
 from .forms import FairForm
 
 def index(request):
+    if not request.user.is_authenticated:
+        return redirect("home")
 
     if request.method == "POST":
         form = FairForm(request.POST)
