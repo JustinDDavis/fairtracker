@@ -20,6 +20,7 @@ def index(request):
             return redirect("home")
 
     all_fairs = Fair.objects.all()
+
     fair_form = FairForm()
     context = {
         "current_user_fairs": all_fairs,
