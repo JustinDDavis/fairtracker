@@ -1,5 +1,6 @@
 
 from django.shortcuts import render, redirect
+from django.contrib import messages
 
 from .models import Fair
 from .forms import FairForm
@@ -19,7 +20,9 @@ def index(request):
 
             print("ENd")
             form_object.save()
+            messages.success(request, ("Request was saved successfully"))
             return redirect("home")
+        messages.error(request, (form.errors))
 
     all_fairs = Fair.objects.all()
 
