@@ -5,6 +5,7 @@ from django.contrib import messages
 from .models import Fair
 from .forms import FairForm
 
+
 def index(request):
     if not request.user.is_authenticated:
         return redirect("home")

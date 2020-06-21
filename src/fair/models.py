@@ -2,6 +2,7 @@ from django.db import models
 
 from django.conf import settings
 
+
 class Fair(models.Model):
     name = models.CharField(max_length=60)
     city = models.CharField(max_length=60)

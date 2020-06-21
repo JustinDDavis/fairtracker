@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'homepage',
     'config',
     'fair',
+    'participant'
 ]
 
 MIDDLEWARE = [
