@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.http import HttpResponseBadRequest
+
 
 from fair.models import Fair
 
@@ -27,8 +29,12 @@ def index(request):
             return redirect("participant_home")
 
         messages.error(request, form.errors)
+        return HttpResponseBadRequest("Invalid form")
 
-    all_participants = Participant.objects.all()
+    current_user = request.user
+    active_fair = Fair.objects.get(owner=current_user, active=True)
+
+    all_participants = Participant.objects.filter(fair=active_fair)
 
     context = {
         "current_user_participants": all_participants
