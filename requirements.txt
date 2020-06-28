@@ -2,3 +2,5 @@ Django==3.0.6
 social-auth-app-django==3.4.0
 python-jose==3.1.0
 python-dotenv==0.13.0
+gunicorn==20.0.4
+django-heroku==0.3.1
