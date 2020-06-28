@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+# Loading the Secrets from .env file
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -44,7 +45,8 @@ INSTALLED_APPS = [
     'homepage',
     'config',
     'fair',
-    'participant'
+    'participant',
+    'catalog'
 ]
 
 MIDDLEWARE = [
