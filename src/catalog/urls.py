@@ -16,13 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-urlpatterns = [
-    path('', include('homepage.urls')),  # Landing page / Sign-in links
-    path('fair/', include('fair.urls')),  # App to handle creation / Edit of Apps
-    path('participant/', include('participant.urls')),  #
-    path('catalog/', include('catalog.urls')),  #
-    path('admin/', admin.site.urls),  # Admin Portal
-    path('', include('social_django.urls')),  # Auth0 Handlers /complete/auth0
-    path('', include('auth0login.urls')),  # /login  and /logout
-]
+from catalog import views
 
+urlpatterns = [
+    path('', views.index, name='catalog_home'),
+]
