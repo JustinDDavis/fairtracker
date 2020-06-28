@@ -16,10 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from catalog import views
+from catalog_item import views
 
 urlpatterns = [
-    path('', views.index, name='catalog_home'),
-    path('activate/<catalog_id>', views.activate, name='catalog_activate'),
-
+    path('', views.index, name='catalog_item_home'),
+    path('delete/<catalog_item_id>', views.delete, name="catalog_item_delete")
 ]
