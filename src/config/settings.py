@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'config',
     'fair',
     'participant',
-    'catalog'
+    'catalog',
+    'catalog_item'
 ]
 
 MIDDLEWARE = [
