@@ -21,6 +21,7 @@ urlpatterns = [
     path('fair/', include('fair.urls')),  # App to handle creation / Edit of Apps
     path('participant/', include('participant.urls')),  #
     path('catalog/', include('catalog.urls')),  #
+    path('catalog-item/', include('catalog_item.urls')),  #
     path('admin/', admin.site.urls),  # Admin Portal
     path('', include('social_django.urls')),  # Auth0 Handlers /complete/auth0
     path('', include('auth0login.urls')),  # /login  and /logout

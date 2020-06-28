@@ -31,6 +31,12 @@ def index(request):
     }
     return render(request, "catalog.html", context)
 
+def activate(request, catalog_id):
+    # TODO: COME BACK AND MAKE SURE THE CURRENT USER IS AN OWNER OF THIS Catalog
+    catalog = Catalog.objects.get(pk=catalog_id)
+    catalog.active = not catalog.active
+    catalog.save()
+    return redirect('catalog_home')
 
 def get_current_fair(current_user):
     active_fair = Fair.objects.get(owner=current_user, active=True)
