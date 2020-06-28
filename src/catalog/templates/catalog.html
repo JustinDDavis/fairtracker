@@ -18,14 +18,14 @@ You're Logged in!
     <h1>Catalog</h1>
     <div class="row">
         <div class="col-md-6">
-            <form method="POST" action="{% url 'participant_home' %}">
+            <form method="POST" action="{% url 'catalog_home' %}">
                 {% csrf_token %}
 
                 <div class="form-group">
                     <input class="form-control" type="text" name="name" id="" placeholder="Catalog Name:">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="email" id="" placeholder="Catalog Description:">
+                    <input class="form-control" type="text" name="description" id="" placeholder="Catalog Description:">
                 </div>
                 <div class="form-group">
                     <input class="form-control" type="text" id="" value="{{current_fair_name}}" disabled>
@@ -45,8 +45,12 @@ You're Logged in!
                     </tr>
                 </thead>
                 <tbody>
-
-
+                    {% for catalog in all_catalogs %}
+                        <tr>
+                            <th scope="row">{{ catalog.name }}</th>
+                            <td>{{ catalog.description }}</td>
+                        </tr>
+                    {% endfor %}
                   </tbody>
             </table>
         </div>
