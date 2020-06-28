@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+from dotenv import load_dotenv
+load_dotenv()
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -127,9 +130,9 @@ STATIC_URL = '/static/'
 # Social Login
 
 SOCIAL_AUTH_TRAILING_SLASH = False  # Remove trailing slash from routes
-SOCIAL_AUTH_AUTH0_DOMAIN = 'dev-eie4drcd.auth0.com'
-SOCIAL_AUTH_AUTH0_KEY = '4etqwm252NY7422S3zFdJ9wYU2eEk1d2'
-SOCIAL_AUTH_AUTH0_SECRET = 'fOifAiUXEenoGz7NZ59_E1kTs0WgWlNrDUArAaFMag74iTHCwvf_7yjrvmiXW5n6'
+SOCIAL_AUTH_AUTH0_DOMAIN = os.environ['SOCIAL_AUTH_AUTH0_DOMAIN']
+SOCIAL_AUTH_AUTH0_KEY = os.environ['SOCIAL_AUTH_AUTH0_KEY']
+SOCIAL_AUTH_AUTH0_SECRET = os.environ['SOCIAL_AUTH_AUTH0_SECRET']
 
 SOCIAL_AUTH_AUTH0_SCOPE = [
     'openid',
