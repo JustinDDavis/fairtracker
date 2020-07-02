@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'participant',
     'catalog',
     'catalog_item',
-    'entry'
+    'entry',
+    'prize'
 ]
 
 MIDDLEWARE = [
