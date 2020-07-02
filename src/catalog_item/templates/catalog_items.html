@@ -50,7 +50,9 @@ You're Logged in!
                             <th scope="row">{{ catalog_item.name }}</th>
                             <td>{{ catalog_item.description }}</td>
                             <td>
-                                <a href="{% url 'catalog_item_delete' catalog_item.id %}">Delete Catalog Item</a>
+                                <a href="{% url 'catalog_item_delete' catalog_item.id %}">
+                                    <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                                </a>
                             </td>
                         </tr>
                     {% endfor %}
