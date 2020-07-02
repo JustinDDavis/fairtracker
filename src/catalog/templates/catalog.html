@@ -39,21 +39,25 @@ You're Logged in!
             <table class="table table-striped table-dark">
                 <thead>
                     <tr>
+                        <th scope="col"></th>
                         <th scope="col">Catalog Name</th>
                         <th scope="col">Description</th>
-                        <th scope="col">State</th>
-                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for catalog in all_catalogs %}
                         <tr>
-                            <th scope="row">{{ catalog.name }}</th>
+                            <th scope="row">
+                                <a href="{% url 'catalog_activate' catalog.id %}">
+                                    {% if catalog.active == True %}
+                                            <i class="fa fa-check-circle fa-2x" aria-hidden="true"></i>
+                                    {% else %}
+                                        <i class="fa fa-circle fa-2x" aria-hidden="true"></i>
+                                    {% endif %}
+                                </a>
+                            </th>
+                            <td>{{ catalog.name }}</td>
                             <td>{{ catalog.description }}</td>
-                            <td>{{ catalog.active }}</td>
-                            <td>
-                                <a href="{% url 'catalog_activate' catalog.id %}">Activate Catalog</a>
-                            </td>
                         </tr>
                     {% endfor %}
                   </tbody>

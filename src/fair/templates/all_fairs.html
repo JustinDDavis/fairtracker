@@ -39,31 +39,33 @@ You're Logged in!
             <table class="table table-striped table-dark">
                 <thead>
                     <tr>
+                        <th scope="col"></th>
                         <th scope="col">Fair Name</th>
                         <th scope="col">City</th>
                         <th scope="col">State</th>
-                        <th scope="col">Active</th>
-                        <th scope="col">Actions</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for fair in current_user_fairs %}
                         <tr>
-                            <th scope="row">{{ fair.name }}</th>
+                            <th scope="row">
+                                <a href="{% url 'fair_activate' fair.id %}">
+                                    {% if fair.active == True %}
+                                        <i class="fa fa-check-circle fa-2x" aria-hidden="true"></i>
+                                    {% else %}
+                                        <i class="fa fa-circle fa-2x" aria-hidden="true"></i>
+                                    {% endif %}
+                                </a>
+                            </th>
+                            <td>{{ fair.city }}</td>
                             <td>{{ fair.city }}</td>
                             <td>{{ fair.state }}</td>
-                            <td>{{ fair.active }}</td>
                             <td>
-                                <a href="{% url 'fair_activate' fair.id %}">Activate FAIR</a>
-                                <a href="{% url 'fair_delete' fair.id %}">Delete FAIR</a>
+                                <a href="{% url 'fair_delete' fair.id %}">
+                                    <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                                </a>
                             </td>
-<!--                            <td>-->
-<!--                                <svg class="bi bi-x-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">-->
-<!--                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>-->
-<!--                                    <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>-->
-<!--                                    <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>-->
-<!--                                </svg>-->
-<!--                            </td>-->
                         </tr>
                     {% endfor %}
 
