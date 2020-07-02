@@ -22,16 +22,22 @@ You're Logged in!
                 {% csrf_token %}
 
                 <div class="form-group">
-                    <input class="form-control" type="text" name="name" id="" placeholder="Catalog Name:">
+                    <select name="participant" class="custom-select">
+                        {% for participant in participants %}
+                        <option value="{{participant.id}}">{{participant.name}}</option>
+                        {% endfor %}
+                    </select>
+
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="description" id="" placeholder="Catalog Description:">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" id="" value="{{active_catalog.name}}" disabled>
+                    <select name="catalog_item" class="custom-select">
+                        {% for catalog_item in catalog_items %}
+                        <option value="{{catalog_item.id}}">{{catalog_item.name}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
 
-                <input class="btn btn-primary" type="submit" value="Add Catalog">
+                <input class="btn btn-primary" type="submit" value="Add Entry">
             </form>
         </div>
 
@@ -39,14 +45,22 @@ You're Logged in!
             <table class="table table-striped table-dark">
                 <thead>
                     <tr>
-                        <th scope="col">Catalog Name</th>
-                        <th scope="col">Description</th>
+                        <th scope="col">Participant Name</th>
+                        <th scope="col">Entry Name</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-
-                  </tbody>
+                    {% for entry in entries %}
+                        <tr>
+                            <th scope="row">{{ entry.participant.name }}</th>
+                            <td>{{ entry.catalog_item.name }}</td>
+                            <td>
+                                <a href="{% url 'entry_delete' entry.id %}">Delete Entry</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
     </div>

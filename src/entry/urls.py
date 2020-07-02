@@ -20,5 +20,5 @@ from entry import views
 
 urlpatterns = [
     path('', views.index, name='entry_home'),
-    # path('delete/<catalog_item_id>', views.delete, name="entry_delete")
+    path('delete/<entry_id>', views.delete, name="entry_delete")
 ]
