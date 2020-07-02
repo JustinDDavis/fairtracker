@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'fair',
     'participant',
     'catalog',
-    'catalog_item'
+    'catalog_item',
+    'entry'
 ]
 
 MIDDLEWARE = [
