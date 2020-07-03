@@ -5,4 +5,4 @@ from .models import Participant
 class ParticipantForm(forms.ModelForm):
     class Meta:
         model = Participant
-        fields = ["name", "email"]
+        fields = ["name", "email", "city", "static_participant_id"]

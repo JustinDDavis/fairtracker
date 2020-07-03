@@ -22,10 +22,16 @@ You're Logged in!
                 {% csrf_token %}
 
                 <div class="form-group">
-                    <input class="form-control" type="text" name="name" id="" placeholder="Participant Name:">
+                    <input class="form-control" type="text" name="name" placeholder="Participant Name:" required>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="email" id="" placeholder="Email:">
+                    <input class="form-control" type="text" name="email" placeholder="Email:" required>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="city" placeholder="City:" required>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="static_participant_id" placeholder="Manually Entered ID:">
                 </div>
 
                 <input class="btn btn-primary" type="submit" value="Add Participant">
@@ -38,6 +44,8 @@ You're Logged in!
                     <tr>
                         <th scope="col">Participant Name</th>
                         <th scope="col">Email</th>
+                        <th scope="col">City</th>
+                        <th scope="col">Manual ID</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -46,6 +54,8 @@ You're Logged in!
                         <tr>
                             <th scope="row">{{ participants.name }}</th>
                             <td>{{ participants.email }}</td>
+                            <td>{{ participants.city }}</td>
+                            <td>{{ participants.static_participant_id }}</td>
                             <td>
                                 <a href="{% url 'participant_delete' participants.id %}">
                                     <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
