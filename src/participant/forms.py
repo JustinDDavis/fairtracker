@@ -7,4 +7,4 @@ class ParticipantForm(forms.ModelForm):
 
     class Meta:
         model = Participant
-        fields = ["name", "email", "city"]
+        fields = ["name", "email", "city", "static_participant_id"]
