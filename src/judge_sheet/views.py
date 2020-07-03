@@ -4,6 +4,7 @@ from django.contrib import messages
 from fair.models import Fair
 from participant.models import Participant
 from catalog.models import Catalog
+from catalog_item.models import CatalogItem
 from prize.models import Prize
 from .models import JudgeSheet
 
@@ -29,6 +30,10 @@ def index(request):
     catalog = Catalog.objects.get(fair=active_fair, active=True)
     prizes = Prize.objects.filter(catalog=catalog)
 
+    # Entries - Dropdown
+    catalog_items = CatalogItem.objects.filter(catalog=catalog)
+    print(catalog_items)
+
     # Table List
     judge_sheets = JudgeSheet.objects.filter(participant__fair=active_fair)
     print(judge_sheets)
@@ -36,6 +41,7 @@ def index(request):
     context = {
         'participants': participants,
         'prizes': prizes,
+        'catalog_items': catalog_items,
         "judge_sheets": judge_sheets
     }
 
