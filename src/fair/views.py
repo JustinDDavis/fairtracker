@@ -25,12 +25,12 @@ def index(request):
 
         messages.error(request, form.errors)
 
-    all_fairs = Fair.objects.all()
+    all_fairs = Fair.objects.filter(owner_id=request.user)
 
-    fair_form = FairForm()
+    # fair_form = FairForm()
     context = {
         "current_user_fairs": all_fairs,
-        "form": fair_form
+        # "form": fair_form
     }
 
     return render(request, "all_fairs.html", context)
@@ -39,10 +39,13 @@ def activate(request, fair_id):
 
     # TODO: COME BACK AND MAKE SURE THE CURRENT USER IS AN OWNER OF THIS FAIR
     fair = Fair.objects.get(pk=fair_id)
-    print(fair.active)
+
     fair.active = not fair.active
     fair.save()
-    print(fair.active)
+
+    # Set all others to False active
+    Fair.objects.filter(owner_id=request.user).exclude(pk=fair_id).update(active=False)
+
     return redirect('fair_home')
 
 def delete(request, fair_id):
