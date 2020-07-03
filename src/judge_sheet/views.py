@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
+from django.core.exceptions import ObjectDoesNotExist
+
 from fair.models import Fair
 from participant.models import Participant
 from catalog.models import Catalog
 from catalog_item.models import CatalogItem
 from prize.models import Prize
+from entry.models import Entry
 from .models import JudgeSheet
 
 from .forms import JudgeSheetForm
@@ -15,6 +18,14 @@ def index(request):
     if request.method == "POST":
         form = JudgeSheetForm(request.POST)
         if form.is_valid():
+            # Make sure the Participant actually enrolled in the Catalog Item.
+            participant = form.cleaned_data['participant']
+            catalog_item = form.cleaned_data['catalog_item']
+            try:
+                results = Entry.objects.get(participant=participant, catalog_item=catalog_item)
+            except ObjectDoesNotExist as err:
+                messages.error(request, f"Participant ({participant.name}) did not enter in catalog item ({catalog_item.name})")
+                return redirect("judge_sheet_home")
             form.save()
             messages.success(request, "Request was saved successfully")
             return redirect("judge_sheet_home")
