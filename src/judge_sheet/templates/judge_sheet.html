@@ -21,16 +21,39 @@ You're Logged in!
             <form method="POST" action="{% url 'judge_sheet_home' %}">
                 {% csrf_token %}
 
-                <div class="form-group">
-                    <select name="participant" class="custom-select">
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputParticipants">Participants</label>
+                    </div>
+                    <select name="participant" id="inputParticipants" class="custom-select">
                         {% for participant in participants %}
-                            <option value="{{participant.id}}">{{participant.id}} - {{participant.name}}</option>
+                            <option value="{{participant.id}}">
+                            {% if not participant.static_participant_id %}
+                                (Auto Set ID) {{ participant.id }}
+                            {% else %}
+                                (Manually Set ID) {{ participant.static_participant_id}}
+                            {% endif %}
+                                | (Participant Name) {{participant.name}}
+                            </option>
+
                         {% endfor %}
                     </select>
-
                 </div>
-                <div class="form-group">
-                    <select name="prize" class="custom-select">
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputCatalogItems">Catalog Items</label>
+                    </div>
+                    <select name="catalog_item" id="inputCatalogItems" class="custom-select">
+                        {% for catalog_item in catalog_items %}
+                            <option value="{{catalog_item.id}}">{{catalog_item.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputPrize">Prize</label>
+                    </div>
+                    <select name="prize" id="inputPrize" class="custom-select">
                         {% for prize in prizes %}
                             <option value="{{prize.id}}">{{prize.name}}</option>
                         {% endfor %}
@@ -54,8 +77,15 @@ You're Logged in!
                 <tbody>
                     {% for sheet in judge_sheets %}
                         <tr>
-                            <th scope="row">{{ sheet.participant.id }}</th>
+                            <th scope="row">
+                                {% if not sheet.participant.static_participant_id  %}
+                                    (Auto Set ID) {{ sheet.participant.id }}
+                                {% else %}
+                                    (Manually Set ID) {{ sheet.participant.static_participant_id}}
+                                {% endif %}
+                            </th>
                             <td>{{ sheet.participant.name }}</td>
+                            <td>{{ sheet.catalog_item.name }}</td>
                             <td>{{ sheet.prize.name }}</td>
                             <td>
                                 <a href="{% url 'judge_sheet_delete' sheet.id %}">
