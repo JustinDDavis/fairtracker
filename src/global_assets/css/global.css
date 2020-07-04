@@ -1,0 +1,36 @@
+body, html {
+  height: 100%;
+  margin: 0;
+
+  color: #FCFAEE;
+}
+
+body {
+    height: 100%;
+    // background-color: #05154C;
+    background-image: linear-gradient(to right top, #05164c, #511058, #8a0050, #b40837, #c64503);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container {
+    margin-top: 3rem;
+    background-color: #05154C88;
+}
+
+.jumbotron {
+    background-color: transparent;
+}
+
+.navbar {
+    background-color: #05154C88;
+}
+
+.list-group{
+    color: #05154C;
+}
+
+.logo {
+    width: 10rem;
+}
