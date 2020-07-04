@@ -1,8 +1,14 @@
+:root {
+    --primary-color: #05154C; /* Navy */
+    --primary-color-transparent: #05154C88; /* Navy with Transparency  */
+    --highlight-color: #FCFAEE; /* Light Cream  */
+}
+
 body, html {
   height: 100%;
   margin: 0;
 
-  color: #FCFAEE;
+  color: var(--highlight-color);
 }
 
 body {
@@ -14,9 +20,9 @@ body {
     background-size: cover;
 }
 
-.container {
+body > .container {
     margin-top: 3rem;
-    background-color: #05154C88;
+    background-color: var(--primary-color-transparent);
 }
 
 .jumbotron {
@@ -24,13 +30,24 @@ body {
 }
 
 .navbar {
-    background-color: #05154C88;
+    background-color: var(--primary-color-transparent);
 }
 
 .list-group{
-    color: #05154C;
+    color: var(--primary-color);
 }
 
 .logo {
     width: 10rem;
+}
+
+.home-button {
+    font-size: 1.5rem;
+    background-color: #3A7C50;
+    border-color: #05154C;
+}
+
+.home-button:hover {
+    background-color: #3A7C50;
+    border-color: #A7C50C;
 }
