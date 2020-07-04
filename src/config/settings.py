@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import epsagon
 
 # Loading the Secrets from .env file
 from dotenv import load_dotenv
@@ -62,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'epsagon.wrappers.django.DjangoMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -167,3 +169,10 @@ import django_heroku
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+# Tracing Service
+epsagon.init(
+  token=os.environ['EPSAGON_TOKEN'],
+  app_name=os.environ['EPSAGON_APP_NAME'],
+  metadata_only=False,  # Optional, send more trace data
+)
