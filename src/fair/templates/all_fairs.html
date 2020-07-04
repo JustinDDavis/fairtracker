@@ -22,13 +22,13 @@ You're Logged in!
                 {% csrf_token %}
 
                 <div class="form-group">
-                    <input class="form-control" type="text" name="name" id="" placeholder="Fair Name:" autocomplete="off">
+                    <input class="form-control" type="text" name="name" id="" placeholder="Fair Name:" autocomplete="off" required>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="city" id="" placeholder="City:" autocomplete="off">
+                    <input class="form-control" type="text" name="city" id="" placeholder="City:" autocomplete="off" required>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="state" id="" placeholder="State:" autocomplete="off">
+                    <input class="form-control" type="text" name="state" id="" placeholder="State:" autocomplete="off" required>
                 </div>
 
                 <input class="btn btn-primary" type="submit" value="Add Fair">
