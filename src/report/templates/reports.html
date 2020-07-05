@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}
+You're Logged in!
+{% endblock %}
+
+{% block left_nav_block %}
+<li class="nav-item active">
+    <a class="nav-link" href="#">Your Fairs</a>
+  </li>
+{% endblock %}
+
+{% block right_nav_block %}
+<a class="btn btn-secondary my-2 my-sm-0" href="/logout">Log out</a>
+{% endblock %}
+
+{% block content %}
+    <h1>Reports</h1>
+<p><a href="{% url 'report_printout' %}">Printable Report</a></p>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">Participant</th>
+                        <th scope="col">Entries/Awards</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for participant in participants %}
+                        <tr>
+                            <td>
+                                {% if not participant.static_participant_id  %}
+                                    <p>ID: {{ participant.id }}</p>
+                                {% else %}
+                                    <p>ID: {{ participant.static_participant_id}}</p>
+                                {% endif %}
+                                <p>Name: {{ participant.name }}</p>
+                                <p>City: {{ participant.city }}</p>
+                                <p>Email: {{ participant.email }}</p>
+                            </td>
+                            <td>
+                                <table class="table table-striped table-dark">
+                                    <tbody>
+                                        {% for entry in entries %}
+                                                {% if entry.participant.id == participant.id %}
+                                                    <tr>
+                                                            <td>
+                                                                <p>Name: {{ entry.catalog_item.name }}</p>
+                                                            </td>
+                                                            <td>
+                                                                {% for judge_sheet in judge_sheets %}
+                                                                    {% if judge_sheet.participant.id == participant.id and entry.catalog_item.id == judge_sheet.catalog_item.id %}
+                                                                        <p>Award: {{judge_sheet.prize.name}} | Amount: ${{judge_sheet.prize.amount}} </p>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </td>
+
+                                                    </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    <tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}
