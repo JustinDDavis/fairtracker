@@ -19,10 +19,11 @@ def index(request):
     # Prizes
     judge_sheets = JudgeSheet.objects.filter(catalog_item__catalog=catalog)
 
+    processed_values = process_for_display(participants, entries, judge_sheets)
+    print(processed_values)
+
     context = {
-        "participants": participants,
-        "entries": entries,
-        "judge_sheets": judge_sheets
+        "processed_values": processed_values
     }
 
     return render(request, "reports.html", context)
@@ -46,3 +47,66 @@ def printer(request):
     }
 
     return render(request, "report_printout.html", context)
+
+
+def process_for_display(participants, entries, judge_sheets):
+    # {
+    #     data: [
+    #         {
+    #             "participant": {
+    #                 "name"...
+    #             },
+    #             "entries": {
+    #
+    #             },
+    #             "awards": {
+    #
+    #             },
+    #             "calculated": {
+    #                 "total_awarded"...
+    #             }
+    #         }
+    #     ]
+    # }
+    return_object = []
+
+    for participant in participants:
+        new_data = {}
+        # Add Participant Data
+        new_data["participant"] = {
+            "name": participant.name,
+            "city": participant.city,
+            "email": participant.email,
+            "id": participant.id if not participant.static_participant_id else participant.static_participant_id
+        }
+
+        new_data["entries"] = []
+        new_data["awards"] = []
+        new_data["calculated"] = {}
+        for entry in entries:
+            # Add entries:
+            if entry.participant.id == participant.id:
+                new_data["entries"].append({
+                    "name": entry.catalog_item.name,
+                    "description": entry.catalog_item.description
+                })
+
+        for judge_sheet in judge_sheets:
+            if judge_sheet.participant.id == participant.id:
+                new_data["awards"].append({
+                    "entry_name": judge_sheet.catalog_item.name,
+                    "prize_name": judge_sheet.prize.name,
+                    "prize_amount": judge_sheet.prize.amount
+                })
+
+        for calc_awards in new_data["awards"]:
+            print(calc_awards)
+            new_data["calculated"].update({
+                "total_awarded": new_data["calculated"].get("total_awarded", 0) + calc_awards["prize_amount"]
+            })
+
+        return_object.append(new_data)
+
+    return {
+        "data": return_object
+    }
