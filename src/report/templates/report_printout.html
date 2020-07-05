@@ -1,0 +1,74 @@
+{% extends 'printer_base.html' %}
+
+
+{% block content %}
+    {% for participant in participants %}
+        <h1>{{ participant.name }}</h1>
+        {% if not participant.static_participant_id  %}
+            <p>Participant ID: {{ participant.id }}</p>
+        {% else %}
+            <p>Participant ID: {{ participant.static_participant_id}}</p>
+        {% endif %}
+        <p>City: {{ participant.city }}</p>
+        <p>Email: {{ participant.email }}</p>
+
+        <h2>Awards</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Entry</th>
+                    <th scope="col">Award Name</th>
+                    <th scope="col">Award Prize</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entry in entries %}
+                {% if entry.participant.id == participant.id %}
+                    {% for judge_sheet in judge_sheets %}
+                        {% if judge_sheet.participant.id == participant.id and entry.catalog_item.id == judge_sheet.catalog_item.id %}
+                            <tr>
+                                <td>
+                                    <p>Entry ID: {{ entry.catalog_item.name }}</p>
+                                </td>
+                                <td>
+                                    <p>Name: {{judge_sheet.prize.name}}</p>
+                                </td>
+                                <td>
+                                    <p>Amount: ${{judge_sheet.prize.amount}} </p>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </tbody>
+        </table>
+
+        <h2>All Entries</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Entry ID</th>
+                    <th scope="col">Entry Name</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entry in entries %}
+                {% if entry.participant.id == participant.id %}
+                    <tr>
+                        <td>
+                            <p>Entry Name: {{ entry.catalog_item.name }}</p>
+                        </td>
+                        <td>
+                            <p>Entry Description: {{ entry.catalog_item.description }}</p>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+        </table>
+
+        <!-- Force Page break-->
+        <p style="page-break-before: always">
+    {% endfor %}
+{% endblock %}
