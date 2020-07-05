@@ -56,6 +56,14 @@
         </tbody>
         </table>
 
+        <h3>Total Amount Awarded:
+            {% if values.calculated.total_awarded > 0 %}
+            ${{ values.calculated.total_awarded }}
+            {% else %}
+            $0.00
+            {% endif %}
+        </h3>
+
         <!-- Force Page break-->
         <p style="page-break-before: always">
     {% endfor %}
