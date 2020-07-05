@@ -1,6 +1,7 @@
 :root {
     --primary-color: #05154C; /* Navy */
-    --primary-color-transparent: #05154C88; /* Navy with Transparency  */
+    /*  --primary-color-transparent: #05154C88; Navy with Transparency  */
+    --primary-color-transparent: #05154C;
     --highlight-color: #FCFAEE; /* Light Cream  */
 }
 
