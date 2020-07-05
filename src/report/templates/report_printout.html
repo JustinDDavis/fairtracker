@@ -2,15 +2,11 @@
 
 
 {% block content %}
-    {% for participant in participants %}
-        <h1>{{ participant.name }}</h1>
-        {% if not participant.static_participant_id  %}
-            <p>Participant ID: {{ participant.id }}</p>
-        {% else %}
-            <p>Participant ID: {{ participant.static_participant_id}}</p>
-        {% endif %}
-        <p>City: {{ participant.city }}</p>
-        <p>Email: {{ participant.email }}</p>
+    {% for values in processed_values.data %}
+        <h1>{{ values.participant.name }}</h1>
+        <p>ID: {{values.participant.id }}</p>
+        <p>City: {{ values.participant.city }}</p>
+        <p>Email: {{ values.participant.email }}</p>
 
         <h2>Awards</h2>
         <table class="table">
@@ -22,24 +18,18 @@
                 </tr>
             </thead>
             <tbody>
-            {% for entry in entries %}
-                {% if entry.participant.id == participant.id %}
-                    {% for judge_sheet in judge_sheets %}
-                        {% if judge_sheet.participant.id == participant.id and entry.catalog_item.id == judge_sheet.catalog_item.id %}
-                            <tr>
-                                <td>
-                                    <p>Entry ID: {{ entry.catalog_item.name }}</p>
-                                </td>
-                                <td>
-                                    <p>Name: {{judge_sheet.prize.name}}</p>
-                                </td>
-                                <td>
-                                    <p>Amount: ${{judge_sheet.prize.amount}} </p>
-                                </td>
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
+            {% for award in values.awards %}
+                <tr>
+                    <td>
+                        <p>Entry ID: {{ award.entry_name }}</p>
+                    </td>
+                    <td>
+                        <p>Name: {{ award.prize_name }}</p>
+                    </td>
+                    <td>
+                        <p>Amount: ${{ award.prize_amount }}</p>
+                    </td>
+                </tr>
             {% endfor %}
         </tbody>
         </table>
@@ -53,17 +43,15 @@
                 </tr>
             </thead>
             <tbody>
-            {% for entry in entries %}
-                {% if entry.participant.id == participant.id %}
-                    <tr>
-                        <td>
-                            <p>Entry Name: {{ entry.catalog_item.name }}</p>
-                        </td>
-                        <td>
-                            <p>Entry Description: {{ entry.catalog_item.description }}</p>
-                        </td>
-                    </tr>
-                {% endif %}
+            {% for entry in values.entries %}
+                <tr>
+                    <td>
+                        <p>Entry Name: {{ entry.name }}</p>
+                    </td>
+                    <td>
+                        <p>Entry Description: {{ entry.description }}</p>
+                    </td>
+                </tr>
             {% endfor %}
         </tbody>
         </table>
