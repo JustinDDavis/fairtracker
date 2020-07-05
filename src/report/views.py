@@ -40,10 +40,10 @@ def printer(request):
     # Prizes
     judge_sheets = JudgeSheet.objects.filter(catalog_item__catalog=catalog)
 
+    processed_values = process_for_display(participants, entries, judge_sheets)
+
     context = {
-        "participants": participants,
-        "entries": entries,
-        "judge_sheets": judge_sheets
+        "processed_values": processed_values
     }
 
     return render(request, "report_printout.html", context)
@@ -107,6 +107,7 @@ def process_for_display(participants, entries, judge_sheets):
 
         return_object.append(new_data)
 
+    print(return_object)
     return {
         "data": return_object
     }
