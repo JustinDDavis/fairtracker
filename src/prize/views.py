@@ -35,6 +35,26 @@ def index(request):
 
     return render(request, "prize.html", context)
 
+def edit(request, prize_id):
+    prize = Prize.objects.get(pk=prize_id)
+
+    if request.method == "POST":
+        form = PrizeForm(request.POST, instance=prize)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Prize Updated Successfully")
+            return redirect("prize_home")
+        messages.error(request, form.errors)
+        return redirect("prize_edit")
+    else:
+        context = {
+            "prize": prize
+        }
+        return render(request, "edit_prize.html", context)
+
+
+
+
 def delete(request, prize_id):
     prize = Prize.objects.get(pk=prize_id)
     prize.delete()

@@ -54,7 +54,10 @@ You're Logged in!
                             <td>{{ prize.description }}</td>
                             <td>{{ prize.amount }}</td>
                             <td>
-                                <a href="{% url 'prize_delete' prize.id %}">
+                                <a href="{% url 'prize_edit' prize.id %}">
+                                    <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
+                                </a>
+                                <a href="{% url 'prize_delete' prize.id %}" onclick="return confirm('Are you sure you want to delete this prize? Items dependent on this item may also be deleted.')">
                                     <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                 </a>
                             </td>
