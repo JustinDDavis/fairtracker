@@ -20,5 +20,6 @@ from prize import views
 
 urlpatterns = [
     path('', views.index, name='prize_home'),
+    path('edit/<prize_id>', views.edit, name="prize_edit"),
     path('delete/<prize_id>', views.delete, name="prize_delete")
 ]
