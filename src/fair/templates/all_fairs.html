@@ -65,7 +65,7 @@ You're Logged in!
                                 <a href="{% url 'fair_edit' fair.id %}">
                                     <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
                                 </a>
-                                <a href="{% url 'fair_delete' fair.id %}">
+                                <a href="{% url 'fair_delete' fair.id %}" onclick="return confirm('Are you sure you want to delete item?')">
                                     <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                 </a>
                             </td>

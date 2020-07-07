@@ -88,7 +88,7 @@ You're Logged in!
                             <td>{{ sheet.catalog_item.name }}</td>
                             <td>{{ sheet.prize.name }}</td>
                             <td>
-                                <a href="{% url 'judge_sheet_edit' sheet.id %}">
+                                <a href="{% url 'judge_sheet_edit' sheet.id %}" onclick="return confirm('Are you sure you want to delete item?')">
                                     <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
                                 </a>
                                 <a href="{% url 'judge_sheet_delete' sheet.id %}">
