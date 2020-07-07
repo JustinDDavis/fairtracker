@@ -42,6 +42,7 @@ You're Logged in!
                         <th scope="col"></th>
                         <th scope="col">Catalog Name</th>
                         <th scope="col">Description</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,6 +59,14 @@ You're Logged in!
                             </th>
                             <td>{{ catalog.name }}</td>
                             <td>{{ catalog.description }}</td>
+                            <td>
+                                <a href="{% url 'catalog_edit' catalog.id %}">
+                                    <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
+                                </a>
+                                <a href="{% url 'catalog_delete' catalog.id %}">
+                                    <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                                </a>
+                            </td>
                         </tr>
                     {% endfor %}
                   </tbody>
