@@ -38,6 +38,31 @@ def activate(request, catalog_id):
     catalog.save()
     return redirect('catalog_home')
 
+def edit(request, catalog_id):
+    catalog = Catalog.objects.get(pk=catalog_id)
+
+    if request.method == "POST":
+        form = CatalogForm(request.POST, instance=catalog)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Catalog Updated Successfully")
+            return redirect("catalog_home")
+        messages.error(request, form.errors)
+        return redirect("catalog_edit")
+    else:
+        context = {
+            "catalog": catalog
+        }
+        return render(request, "edit_catalog.html", context)
+
+
+def delete(request, catalog_id):
+    catalog = Catalog.objects.get(pk=catalog_id)
+    catalog.delete()
+    messages.success(request, "Catalog was deleted  successfully")
+    return redirect('catalog_home')
+
+
 def get_current_fair(current_user):
     active_fair = Fair.objects.get(owner=current_user, active=True)
     return active_fair
