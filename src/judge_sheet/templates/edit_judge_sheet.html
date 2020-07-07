@@ -15,10 +15,10 @@ You're Logged in!
 {% endblock %}
 
 {% block content %}
-    <h1>Judge Sheet</h1>
+    <h1>Catalog - Edit</h1>
     <div class="row">
-        <div class="col-md-6">
-            <form method="POST" action="{% url 'judge_sheet_home' %}">
+        <div class="col-md-12">
+            <form method="POST" action="{% url 'judge_sheet_edit' judge_sheet.id %}">
                 {% csrf_token %}
 
                 <div class="form-group input-group">
@@ -27,7 +27,11 @@ You're Logged in!
                     </div>
                     <select name="participant" id="inputParticipants" class="custom-select">
                         {% for participant in participants %}
-                            <option value="{{participant.id}}">
+                            <option value="{{participant.id}}"
+                                {% if participant.id == judge_sheet.participant.id%}
+                                    selected
+                                {% endif %}
+                            >
                             {% if not participant.static_participant_id %}
                                 (Auto Set ID) {{ participant.id }}
                             {% else %}
@@ -45,7 +49,11 @@ You're Logged in!
                     </div>
                     <select name="catalog_item" id="inputCatalogItems" class="custom-select">
                         {% for catalog_item in catalog_items %}
-                            <option value="{{catalog_item.id}}">{{catalog_item.name}}</option>
+                            <option value="{{catalog_item.id}}"
+                                {% if catalog_item.id == judge_sheet.catalog_item.id%}
+                                    selected
+                                {% endif %}
+                            >{{catalog_item.name}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -55,51 +63,19 @@ You're Logged in!
                     </div>
                     <select name="prize" id="inputPrize" class="custom-select">
                         {% for prize in prizes %}
-                            <option value="{{prize.id}}">{{prize.name}}</option>
+                            <option value="{{prize.id}}"
+                                {% if prize.id == judge_sheet.prize.id%}
+                                    selected
+                                {% endif %}
+                            >{{prize.name}}</option>
                         {% endfor %}
                     </select>
                 </div>
 
-                <input class="btn btn-primary" type="submit" value="Add Judge Sheet">
+                <input class="btn btn-primary" type="submit" value="Update Catalog">
             </form>
         </div>
 
-        <div class="col-md-6">
-            <table class="table table-striped table-dark">
-                <thead>
-                    <tr>
-                        <th scope="col">Participant ID</th>
-                        <th scope="col">Participant Name</th>
-                        <th scope="col">Award Name</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for sheet in judge_sheets %}
-                        <tr>
-                            <th scope="row">
-                                {% if not sheet.participant.static_participant_id  %}
-                                    (Auto Set ID) {{ sheet.participant.id }}
-                                {% else %}
-                                    (Manually Set ID) {{ sheet.participant.static_participant_id}}
-                                {% endif %}
-                            </th>
-                            <td>{{ sheet.participant.name }}</td>
-                            <td>{{ sheet.catalog_item.name }}</td>
-                            <td>{{ sheet.prize.name }}</td>
-                            <td>
-                                <a href="{% url 'judge_sheet_edit' sheet.id %}" onclick="return confirm('Are you sure you want to delete item?')">
-                                    <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
-                                </a>
-                                <a href="{% url 'judge_sheet_delete' sheet.id %}">
-                                    <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
     </div>
 
 

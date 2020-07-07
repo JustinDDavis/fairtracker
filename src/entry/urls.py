@@ -20,5 +20,6 @@ from entry import views
 
 urlpatterns = [
     path('', views.index, name='entry_home'),
+    path('edit/<entry_id>', views.edit, name="entry_edit"),
     path('delete/<entry_id>', views.delete, name="entry_delete")
 ]
