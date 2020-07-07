@@ -20,5 +20,6 @@ from catalog_item import views
 
 urlpatterns = [
     path('', views.index, name='catalog_item_home'),
+    path('edit/<catalog_item_id>', views.edit, name="catalog_item_edit"),
     path('delete/<catalog_item_id>', views.delete, name="catalog_item_delete")
 ]

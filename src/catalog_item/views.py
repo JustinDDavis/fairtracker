@@ -32,6 +32,24 @@ def index(request):
     return render(request, "catalog_items.html", context)
 
 
+def edit(request, catalog_item_id):
+    catalog_item = CatalogItem.objects.get(pk=catalog_item_id)
+
+    if request.method == "POST":
+        form = CatalogItemForm(request.POST, instance=catalog_item)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Catalog Item Updated Successfully")
+            return redirect("catalog_item_home")
+        messages.error(request, form.errors)
+        return redirect("catalog_item_edit")
+    else:
+        context = {
+            "catalog_item": catalog_item
+        }
+        return render(request, "edit_catalog_items.html", context)
+
+
 def delete(request, catalog_item_id):
     catalog_item = CatalogItem.objects.get(pk=catalog_item_id)
     catalog_item.delete()
