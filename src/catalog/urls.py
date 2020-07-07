@@ -21,5 +21,7 @@ from catalog import views
 urlpatterns = [
     path('', views.index, name='catalog_home'),
     path('activate/<catalog_id>', views.activate, name='catalog_activate'),
+    path('edit/<catalog_id>', views.edit, name='catalog_edit'),
+    path('delete/<catalog_id>', views.delete, name='catalog_delete'),
 
 ]
