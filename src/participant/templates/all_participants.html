@@ -57,7 +57,7 @@ You're Logged in!
                             <td>{{ participants.city }}</td>
                             <td>{{ participants.static_participant_id }}</td>
                             <td>
-                                <a href="{% url 'participant_edit' participants.id %}">
+                                <a href="{% url 'participant_edit' participants.id %}" onclick="return confirm('Are you sure you want to delete item?')">
                                     <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
                                 </a>
                                 <a href="{% url 'participant_delete' participants.id %}">
