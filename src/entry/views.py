@@ -41,6 +41,33 @@ def index(request):
     return render(request, "entries.html", context)
 
 
+def edit(request, entry_id):
+    entry = Entry.objects.get(pk=entry_id)
+
+    if request.method == "POST":
+        form = EntryForm(request.POST, instance=entry)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Entry Updated Successfully")
+            return redirect("entry_home")
+        messages.error(request, form.errors)
+        return redirect("entry_edit")
+    else:
+        # Participants - Dropdown
+        active_fair = Fair.objects.get(owner=request.user, active=True)
+        participants = Participant.objects.filter(fair=active_fair)
+
+        # Catalog Items - Dropdown
+        catalog = Catalog.objects.get(fair=active_fair, active=True)
+        catalog_items = CatalogItem.objects.filter(catalog=catalog)
+
+        context = {
+            "entry": entry,
+            "participants": participants,
+            "catalog_items": catalog_items
+        }
+        return render(request, "edit_entry.html", context)
+
 def delete(request, entry_id):
     entry = Entry.objects.get(pk=entry_id)
     entry.delete()

@@ -56,6 +56,9 @@ You're Logged in!
                             <th scope="row">{{ entry.participant.name }}</th>
                             <td>{{ entry.catalog_item.name }}</td>
                             <td>
+                                <a href="{% url 'entry_edit' entry.id %}">
+                                    <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
+                                </a>
                                 <a href="{% url 'entry_delete' entry.id %}">
                                     <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                 </a>

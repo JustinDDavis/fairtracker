@@ -20,5 +20,6 @@ from judge_sheet import views
 
 urlpatterns = [
     path('', views.index, name='judge_sheet_home'),
+    path('edit/<judge_sheet_id>', views.edit, name="judge_sheet_edit"),
     path('delete/<judge_sheet_id>', views.delete, name="judge_sheet_delete")
 ]
