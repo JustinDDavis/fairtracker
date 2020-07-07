@@ -58,6 +58,38 @@ def index(request):
 
     return render(request, "judge_sheet.html", context)
 
+def edit(request, judge_sheet_id):
+    judge_sheet = JudgeSheet.objects.get(pk=judge_sheet_id)
+
+    if request.method == "POST":
+        form = JudgeSheetForm(request.POST, instance=judge_sheet)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Judge Sheet Updated Successfully")
+            return redirect("judge_sheet_home")
+        messages.error(request, form.errors)
+        return redirect("judge_sheet_edit")
+    else:
+        # Participants - Dropdown
+        active_fair = Fair.objects.get(owner=request.user, active=True)
+        participants = Participant.objects.filter(fair=active_fair)
+
+        # Catalog Items - Dropdown
+        catalog = Catalog.objects.get(fair=active_fair, active=True)
+        prizes = Prize.objects.filter(catalog=catalog)
+
+        # Entries - Dropdown
+        catalog_items = CatalogItem.objects.filter(catalog=catalog)
+
+
+        context = {
+            'participants': participants,
+            'prizes': prizes,
+            'catalog_items': catalog_items,
+            'judge_sheet': judge_sheet
+        }
+        return render(request, "edit_judge_sheet.html", context)
+
 
 def delete(request, judge_sheet_id):
     judge_sheet = JudgeSheet.objects.get(pk=judge_sheet_id)
