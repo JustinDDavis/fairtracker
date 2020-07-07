@@ -20,5 +20,6 @@ from participant import views
 
 urlpatterns = [
     path('', views.index, name='participant_home'),
+    path('edit/<participant_id>', views.edit, name="participant_edit"),
     path('delete/<participant_id>', views.delete, name="participant_delete")
 ]

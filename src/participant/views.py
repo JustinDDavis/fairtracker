@@ -42,6 +42,24 @@ def index(request):
     return render(request, "all_participants.html", context)
 
 
+def edit(request, participant_id):
+    participant = Participant.objects.get(pk=participant_id)
+
+    if request.method == "POST":
+        form = ParticipantForm(request.POST, instance=participant)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Participant Updated Successfully")
+            return redirect("participant_home")
+        messages.error(request, form.errors)
+        return redirect("participant_edit")
+    else:
+        context = {
+            "participant": participant
+        }
+        return render(request, "edit_participant.html", context)
+
+
 def delete(request, participant_id):
     participant = Participant.objects.get(pk=participant_id)
     participant.delete()

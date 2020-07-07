@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+You're Logged in!
+{% endblock %}
+
+{% block left_nav_block %}
+<li class="nav-item active">
+    <a class="nav-link" href="#">Your Participants</a>
+  </li>
+{% endblock %}
+
+{% block right_nav_block %}
+<a class="btn btn-secondary my-2 my-sm-0" href="/logout">Log out</a>
+{% endblock %}
+
+{% block content %}
+    <h1>Fair - Edit</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <form method="POST" action="{% url 'fair_edit' fair.id %}">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <input class="form-control" type="text" name="name" id="" placeholder="{{ fair.name }}" value="{{ fair.name }}" required>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="city" id="" placeholder="{{ fair.city }}" value="{{ fair.city }}" required>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="state" id="" placeholder="{{ fair.state }}" value="{{ fair.state }}" required>
+                </div>
+
+                <input class="btn btn-primary" type="submit" value="Update Fair">
+            </form>
+        </div>
+
+    </div>
+
+
+{% endblock %}
