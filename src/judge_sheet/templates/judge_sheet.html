@@ -25,9 +25,9 @@ You're Logged in!
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="inputParticipants">Participants</label>
                     </div>
-                    <select name="participant" id="inputParticipants" class="custom-select">
+                    <select name="participant" id="inputParticipants" class="selectpicker form-control" data-live-search="true">
                         {% for participant in participants %}
-                            <option value="{{participant.id}}">
+                            <option value="{{participant.id}}" data-tokens="{{ participant.id }} {{ participant.static_participant_id}} {{participant.name}}">
                             {% if not participant.static_participant_id %}
                                 (Auto Set ID) {{ participant.id }}
                             {% else %}
@@ -43,9 +43,9 @@ You're Logged in!
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="inputCatalogItems">Catalog Items</label>
                     </div>
-                    <select name="catalog_item" id="inputCatalogItems" class="custom-select">
+                    <select name="catalog_item" id="inputCatalogItems"  class="selectpicker form-control" data-live-search="true">
                         {% for catalog_item in catalog_items %}
-                            <option value="{{catalog_item.id}}">{{catalog_item.name}}</option>
+                            <option value="{{catalog_item.id}}" data-tokens="{{catalog_item.name}}">{{catalog_item.name}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -53,9 +53,9 @@ You're Logged in!
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="inputPrize">Prize</label>
                     </div>
-                    <select name="prize" id="inputPrize" class="custom-select">
+                    <select name="prize" id="inputPrize"  class="selectpicker form-control" data-live-search="true">
                         {% for prize in prizes %}
-                            <option value="{{prize.id}}">{{prize.name}}</option>
+                            <option value="{{prize.id}}" data-tokens="{{prize.name}}">{{prize.name}}</option>
                         {% endfor %}
                     </select>
                 </div>
