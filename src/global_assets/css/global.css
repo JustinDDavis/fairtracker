@@ -52,3 +52,8 @@ body > .container {
     background-color: #3A7C50;
     border-color: #A7C50C;
 }
+
+/* Override Bootstrap select stuff */
+.bootstrap-select {
+    width: inherit;
+}
