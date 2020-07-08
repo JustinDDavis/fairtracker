@@ -17,8 +17,8 @@ body {
     // background-color: #05154C;
     background-image: linear-gradient(to right top, #05164c, #511058, #8a0050, #b40837, #c64503);
     background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-repeat: repeat-y;
+    background-size: auto;
 }
 
 body > .container {
