@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
+from django.db.models.functions import Lower
 
 from fair.models import Fair
 from catalog.models import Catalog
@@ -26,11 +27,13 @@ def index(request):
         return redirect("catalog_item_home")
 
     sort_column = request.GET.get('sort', '')
-    if sort_column in ["name", "-name", "description", "-description"]:
+    if sort_column in ["name", "description"]:
         # sort=author
-        catalog_items = catalog_items.order_by(sort_column)
+        catalog_items = catalog_items.order_by(Lower(sort_column))
+    elif sort_column in ["-name", "-description"]:
+        all_fairs = catalog_items.order_by(Lower(sort_column[1:]).desc())
     else:
-        catalog_items = catalog_items.order_by("name")
+        catalog_items = catalog_items.order_by(Lower("name"))
 
     context = {
         "active_catalog": catalog,
