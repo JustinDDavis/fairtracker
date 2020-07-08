@@ -23,7 +23,7 @@ def user_homepage(request):
         'email': auth0user.extra_data['email'],
     }
 
-    all_fair_items = Fair.objects.all()
+    all_fair_items = Fair.objects.filter(owner=request.user)
     
     return render(request, 'user_homepage.html', {
         'auth0User': auth0user,
