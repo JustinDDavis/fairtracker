@@ -25,6 +25,13 @@ def index(request):
         messages.error(request, form.errors)
         return redirect("catalog_item_home")
 
+    sort_column = request.GET.get('sort', '')
+    if sort_column in ["name", "-name", "description", "-description"]:
+        # sort=author
+        catalog_items = catalog_items.order_by(sort_column)
+    else:
+        catalog_items = catalog_items.order_by("name")
+
     context = {
         "active_catalog": catalog,
         "catalog_items": catalog_items
