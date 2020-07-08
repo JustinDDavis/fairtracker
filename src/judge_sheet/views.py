@@ -46,7 +46,7 @@ def index(request):
     print(catalog_items)
 
     # Table List
-    judge_sheets = JudgeSheet.objects.filter(participant__fair=active_fair)
+    judge_sheets = JudgeSheet.objects.filter(participant__fair=active_fair).order_by("catalog_item__name", "prize__name")
     print(judge_sheets)
 
     context = {

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models.functions import Lower
 
 from fair.models import Fair
 from participant.models import Participant
@@ -10,7 +11,7 @@ from entry.models import Entry
 def index(request):
     # Particpants
     active_fair = Fair.objects.get(owner=request.user, active=True)
-    participants = Participant.objects.filter(fair=active_fair)
+    participants = Participant.objects.filter(fair=active_fair).order_by(Lower("name"))
 
     # Entries
     catalog = Catalog.objects.get(fair=active_fair, active=True)
@@ -31,7 +32,7 @@ def index(request):
 def printer(request):
     # Particpants
     active_fair = Fair.objects.get(owner=request.user, active=True)
-    participants = Participant.objects.filter(fair=active_fair)
+    participants = Participant.objects.filter(fair=active_fair).order_by(Lower("name"))
 
     # Entries
     catalog = Catalog.objects.get(fair=active_fair, active=True)

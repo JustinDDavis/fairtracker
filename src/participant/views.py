@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponseBadRequest
 
+from django.db.models.functions import Lower
 
 from fair.models import Fair
 
@@ -35,6 +36,15 @@ def index(request):
     active_fair = Fair.objects.get(owner=current_user, active=True)
 
     all_participants = Participant.objects.filter(fair=active_fair)
+
+    sort_column = request.GET.get('sort', '')
+    if sort_column in ["name", "email", "city", "static_participant_id"]:
+        # sort=author
+        all_participants = all_participants.order_by(Lower(sort_column))
+    elif sort_column in ["-name", "-email", "-city", "-static_participant_id"]:
+        all_participants = all_participants.order_by(Lower(sort_column[1:]).desc())
+    else:
+        all_participants = all_participants.order_by(Lower("name"))
 
     context = {
         "current_user_participants": all_participants
