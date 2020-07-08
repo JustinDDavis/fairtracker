@@ -2,6 +2,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
+from django.db.models.functions import Lower
+
 from .models import Fair
 from .forms import FairForm
 
@@ -26,6 +28,15 @@ def index(request):
         messages.error(request, form.errors)
 
     all_fairs = Fair.objects.filter(owner_id=request.user)
+
+    sort_column = request.GET.get('sort', '')
+    if sort_column in ["name", "city", "state"]:
+        # sort=author
+        all_fairs = all_fairs.order_by(Lower(sort_column))
+    elif sort_column in ["-name", "-city", "-state"]:
+        all_fairs = all_fairs.order_by(Lower(sort_column[1:]).desc())
+    else:
+        all_fairs = all_fairs.order_by(Lower("name"))
 
     # fair_form = FairForm()
     context = {
