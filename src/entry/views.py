@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.db.models.functions import Lower
 
 from fair.models import Fair
 from participant.models import Participant
@@ -32,6 +33,22 @@ def index(request):
     # entries = Entry.entry_catalog_item.filter(catalog=catalog)
     entries = Entry.objects.filter(catalog_item__catalog=catalog)
     print(entries)
+
+    sort_column = request.GET.get('sort', '')
+    if sort_column in ["participant", "-participant"]:
+        # sort=author
+        if sort_column[0] == "-":
+            entries = entries.order_by(Lower("participant__name").desc())
+        else:
+            entries = entries.order_by(Lower("participant__name"))
+
+    elif sort_column in ["catalog_item", "-catalog_item"]:
+        if sort_column[0] == "-":
+            entries = entries.order_by(Lower("catalog_name__name").desc())
+        else:
+            entries = entries.order_by(Lower("catalog_name__name"))
+    else:
+        entries = entries.order_by(Lower("participant__name"))
 
     context = {
         'participants': participants,
