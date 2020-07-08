@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.db.models.functions import Lower
 
 from fair.models import Fair
 from catalog.models import Catalog
@@ -24,7 +25,23 @@ def index(request):
         messages.error(request, form.errors)
         return redirect("prize_home")
 
-    prizes = Prize.objects.filter(catalog=current_catalog)
+    prizes = Prize.objects.filter(catalog=current_catalog).extra(
+        select={'cast_amount': 'CAST(amount AS INTEGER)'}
+    )
+
+    sort_column = request.GET.get('sort', '')
+    if sort_column in ["name", "description"]:
+        # sort=author
+        prizes = prizes.order_by(Lower(sort_column))
+    elif sort_column in ["-name", "-description"]:
+        prizes = prizes.order_by(Lower(sort_column[1:]).desc())
+    elif sort_column in ["amount", "-amount"]:
+        if sort_column[0] == "-":
+            prizes = prizes.order_by("-cast_amount")
+        else:
+            prizes = prizes.order_by("cast_amount")
+    else:
+        prizes = prizes.order_by(Lower("name"))
 
     print(prizes)
 
