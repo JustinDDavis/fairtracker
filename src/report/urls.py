@@ -22,4 +22,5 @@ urlpatterns = [
     path('', views.index, name='report_home'),
     path('print/', views.printer, name='report_printout'),
     path('export/participants', views.report_export_participants, name='report_export_participants'),
+    path('export/entries', views.report_export_entries, name='report_export_entries'),
 ]
