@@ -1,3 +1,6 @@
+import csv
+
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.db.models.functions import Lower
 
@@ -48,6 +51,23 @@ def printer(request):
     }
 
     return render(request, "report_printout.html", context)
+
+
+def report_export_participants(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="FairTracker_Participant_export.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Fair Name', 'Participant Name', 'Participant Email', 'Participant City', 'Participant Manual ID'])
+
+    # Particpants
+    active_fair = Fair.objects.get(owner=request.user, active=True)
+    participants = Participant.objects.filter(fair=active_fair).order_by(Lower("name"))
+
+    for participant in participants:
+        writer.writerow([active_fair.name, participant.name, participant.email, participant.city, participant.static_participant_id])
+
+    return response
 
 
 def process_for_display(participants, entries, judge_sheets):
