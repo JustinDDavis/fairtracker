@@ -16,7 +16,9 @@ You're Logged in!
 
 {% block content %}
     <h1>Reports</h1>
-<p><a href="{% url 'report_printout' %}">Printable Report</a></p>
+    <p><a href="{% url 'report_printout' %}">Printable Report</a></p>
+    <p><a href="{% url 'report_export_participants' %}">CSV Export - Participants</a></p>
+
     <div class="row">
         <div class="col-md-12">
             <table class="table table-striped table-dark">
