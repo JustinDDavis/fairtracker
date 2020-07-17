@@ -51,6 +51,12 @@ def activate(request, fair_id):
     # TODO: COME BACK AND MAKE SURE THE CURRENT USER IS AN OWNER OF THIS FAIR
     fair = Fair.objects.get(pk=fair_id)
 
+    print(fair.owner)
+    print(request.user)
+    if fair.owner != request.user:
+        print("Fair is not owned by this person")
+        return redirect('fair_home')
+
     fair.active = not fair.active
     fair.save()
 
@@ -62,6 +68,10 @@ def activate(request, fair_id):
 
 def edit(request, fair_id):
     fair = Fair.objects.get(pk=fair_id)
+
+    if fair.owner != request.user:
+        print("Edit - Fair is not owned by this person")
+        return redirect('fair_home')
 
     if request.method == "POST":
         form = FairForm(request.POST, instance=fair)
@@ -80,6 +90,10 @@ def edit(request, fair_id):
 
 def delete(request, fair_id):
     fair = Fair.objects.get(pk=fair_id)
+    if fair.owner != request.user:
+        print("Delete - Fair is not owned by this person")
+        return redirect('fair_home')
+
     fair.delete()
     messages.success(request, "Fair was deleted  successfully")
     return redirect('fair_home')
