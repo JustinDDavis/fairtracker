@@ -6,6 +6,7 @@ from .utils import get_dummy_user, \
                     create_fair, \
                     standard_fair
 
+
 class TestFairPage(TestCase):
     def setUp(self) -> None:
         self.client.force_login(get_dummy_user())
