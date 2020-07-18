@@ -2,15 +2,8 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.db.models.query import QuerySet
 
-from .models import Fair
-from .forms import FairForm
-
-
-class UnAuthTest(TestCase):
-    def test_unauthenticated_users_should_not_access(self) -> None:
-        response = self.client.get('/fair/')
-        self.assertRedirects(response, "/")
-
+from fair.models import Fair
+from fair.forms import FairForm
 
 class TestFairPage(TestCase):
     def setUp(self) -> None:
