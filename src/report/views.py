@@ -7,8 +7,10 @@ from django.db.models.functions import Lower
 from fair.models import Fair
 from participant.models import Participant
 from catalog.models import Catalog
+from catalog_item.models import CatalogItem
 from judge_sheet.models import JudgeSheet
 from entry.models import Entry
+from prize.models import Prize
 
 
 def index(request):
@@ -95,6 +97,75 @@ def report_export_entries(request):
                              row["participant"].get("static_participant_id", row["participant"].get("id", "-")),
                              entry["name"],
                              entry["description"]])
+
+    return response
+
+def report_full_fair(request):
+    # List all entries
+    active_fair = Fair.objects.get(owner=request.user, active=True)
+    catalog = Catalog.objects.get(fair=active_fair, active=True)
+    catalog_items = CatalogItem.objects.filter(catalog=catalog).order_by("name")
+
+    # Get all Prices
+    prizes = Prize.objects.filter(catalog=catalog).order_by("-amount", "name")
+
+    # I need a nxn Matrix. First column will be the Catalog Items
+    # The columns will be the prizes.
+    # I want the winner name in the column of their prize.
+    #  Maybe a dictionary to store the prize and their matching index?
+    # {
+    #   "award 1": 1,
+    #   "award blue: 2,
+    # }
+
+    matrix_map = {}
+    column_offset = 1
+    for index, prize in enumerate(prizes):
+        matrix_map[prize.name] = index + column_offset
+    print(matrix_map)
+
+    # Get number of columns
+    number_of_columns = len(matrix_map.keys()) + 1
+    # Get number of rows
+    number_of_rows = len(catalog_items) + 1
+
+    print(f"number of columns: {number_of_columns}")
+    print(f"number of rows: {number_of_rows}")
+
+    report_array = [["" for x in range(number_of_columns)] for y in range(number_of_rows)]
+
+    # Populate Header:
+    report_array[0][0] = "Catalog Item Names"
+    for prize_name in matrix_map.keys():
+        # I need to place at the dictionary value in this first row
+        report_array[0][matrix_map[prize_name]] = prize_name
+
+
+
+    # To through the Catalog Items
+    # Get all the Judge sheets of this catalog item.
+    #
+    for index, catalog_item in enumerate(catalog_items):
+        report_array[index+1][0] = catalog_item.name
+
+        judge_sheets = JudgeSheet.objects.filter(catalog_item=catalog_item)
+        for judge_sheet in judge_sheets:
+            prize_name = judge_sheet.prize.name
+            report_array_location = matrix_map[prize_name]
+
+            if not report_array[index+1][report_array_location]:
+                report_array[index+1][report_array_location] = judge_sheet.participant.name
+            else:
+                report_array[index + 1][report_array_location] = report_array[index + 1][report_array_location] + " / " + judge_sheet.participant.name
+
+    print(report_array)
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="FairTracker_Full_Report.csv"'
+
+    writer = csv.writer(response)
+    for row in report_array:
+        writer.writerow(row)
 
     return response
 
