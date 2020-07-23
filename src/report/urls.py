@@ -23,4 +23,6 @@ urlpatterns = [
     path('print/', views.printer, name='report_printout'),
     path('export/participants', views.report_export_participants, name='report_export_participants'),
     path('export/entries', views.report_export_entries, name='report_export_entries'),
+    path('export/all_fair', views.report_full_fair, name='report_full_fair'),
+
 ]
