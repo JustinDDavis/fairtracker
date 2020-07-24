@@ -34,27 +34,27 @@
         </tbody>
         </table>
 
-        <h2>All Entries</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Entry ID</th>
-                    <th scope="col">Entry Name</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for entry in values.entries %}
-                <tr>
-                    <td>
-                        <p>Entry Name: {{ entry.name }}</p>
-                    </td>
-                    <td>
-                        <p>Entry Description: {{ entry.description }}</p>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-        </table>
+<!--        <h2>All Entries</h2>-->
+<!--        <table class="table">-->
+<!--            <thead>-->
+<!--                <tr>-->
+<!--                    <th scope="col">Entry ID</th>-->
+<!--                    <th scope="col">Entry Name</th>-->
+<!--                </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            {% for entry in values.entries %}-->
+<!--                <tr>-->
+<!--                    <td>-->
+<!--                        <p>Entry Name: {{ entry.name }}</p>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <p>Entry Description: {{ entry.description }}</p>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            {% endfor %}-->
+<!--        </tbody>-->
+<!--        </table>-->
 
         <h3>Total Amount Awarded:
             {% if values.calculated.total_awarded > 0 %}
