@@ -20,7 +20,7 @@ from fair import views
 
 urlpatterns = [
     path('', views.index, name='fair_home'),
-    # path('activate/<fair_id>', views.activate, name="fair_activate"),
+    path('activate/<fair_id>', views.activate, name="fair_activate"),
     # path('edit/<fair_id>', views.edit, name="fair_edit"),
     # path('delete/<fair_id>', views.delete, name="fair_delete")
 ]

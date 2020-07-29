@@ -44,26 +44,24 @@ def index(request):
 
     return render(request, "test.html", context)
 
-# def activate(request, fair_id):
-#
-#     # TODO: COME BACK AND MAKE SURE THE CURRENT USER IS AN OWNER OF THIS FAIR
-#     fair = Fair.objects.get(pk=fair_id)
-#
-#     print(fair.owner)
-#     print(request.user)
-#     if fair.owner != request.user:
-#         print("Fair is not owned by this person")
-#         return redirect('fair_home')
-#
-#     fair.active = not fair.active
-#     fair.save()
-#
-#     # Set all others to False active
-#     Fair.objects.filter(owner_id=request.user).exclude(pk=fair_id).update(active=False)
-#
-#     return redirect('fair_home')
-#
-#
+
+def activate(request, fair_id):
+    # TODO: COME BACK AND MAKE SURE THE CURRENT USER IS AN OWNER OF THIS FAIR
+    fair = Fair.objects.get(pk=fair_id)
+
+    if fair.owner != request.user:
+        # Fair is not owned by this person
+        return redirect('fair_home')
+
+    fair.active = not fair.active
+    fair.save()
+
+    # Set all others to False active
+    Fair.objects.filter(owner_id=request.user).exclude(pk=fair_id).update(active=False)
+
+    return redirect('fair_home')
+
+
 # def edit(request, fair_id):
 #     fair = Fair.objects.get(pk=fair_id)
 #
