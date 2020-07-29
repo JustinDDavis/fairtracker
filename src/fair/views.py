@@ -82,14 +82,14 @@ def edit(request, fair_id):
             "fair": fair
         }
         return render(request, "edit_fair.html", context)
-#
-#
-# def delete(request, fair_id):
-#     fair = Fair.objects.get(pk=fair_id)
-#     if fair.owner != request.user:
-#         print("Delete - Fair is not owned by this person")
-#         return redirect('fair_home')
-#
-#     fair.delete()
-#     messages.success(request, "Fair was deleted  successfully")
-#     return redirect('fair_home')
+
+
+def delete(request, fair_id):
+    fair = Fair.objects.get(pk=fair_id)
+    if fair.owner != request.user:
+        print("Delete - Fair is not owned by this person")
+        return redirect('fair_home')
+
+    fair.delete()
+    messages.success(request, "Fair was deleted  successfully")
+    return redirect('fair_home')
