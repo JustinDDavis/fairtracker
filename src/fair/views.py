@@ -62,26 +62,26 @@ def activate(request, fair_id):
     return redirect('fair_home')
 
 
-# def edit(request, fair_id):
-#     fair = Fair.objects.get(pk=fair_id)
-#
-#     if fair.owner != request.user:
-#         print("Edit - Fair is not owned by this person")
-#         return redirect('fair_home')
-#
-#     if request.method == "POST":
-#         form = FairForm(request.POST, instance=fair)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, "Fair Updated Successfully")
-#             return redirect("fair_home")
-#         messages.error(request, form.errors)
-#         return redirect("fair_edit")
-#     else:
-#         context = {
-#             "fair": fair
-#         }
-#         return render(request, "edit_fair.html", context)
+def edit(request, fair_id):
+    fair = Fair.objects.get(pk=fair_id)
+
+    if fair.owner != request.user:
+        # print("Edit - Fair is not owned by this person")
+        return redirect('fair_home')
+
+    if request.method == "POST":
+        form = FairForm(request.POST, instance=fair)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Fair Updated Successfully")
+            return redirect("fair_home")
+        messages.error(request, form.errors)
+        return redirect("fair_home")
+    else:
+        context = {
+            "fair": fair
+        }
+        return render(request, "edit_fair.html", context)
 #
 #
 # def delete(request, fair_id):
