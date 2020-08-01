@@ -17,7 +17,7 @@ def index(request):
         if form.is_valid():
 
             form_object = form.save(commit=False)
-            
+
             current_user = request.user
             form_object.owner = current_user
 
@@ -38,23 +38,19 @@ def index(request):
     else:
         all_fairs = all_fairs.order_by(Lower("name"))
 
-    # fair_form = FairForm()
     context = {
         "current_user_fairs": all_fairs,
-        # "form": fair_form
     }
 
-    return render(request, "all_fairs.html", context)
+    return render(request, "test.html", context)
+
 
 def activate(request, fair_id):
-
     # TODO: COME BACK AND MAKE SURE THE CURRENT USER IS AN OWNER OF THIS FAIR
     fair = Fair.objects.get(pk=fair_id)
 
-    print(fair.owner)
-    print(request.user)
     if fair.owner != request.user:
-        print("Fair is not owned by this person")
+        # Fair is not owned by this person
         return redirect('fair_home')
 
     fair.active = not fair.active
@@ -70,7 +66,7 @@ def edit(request, fair_id):
     fair = Fair.objects.get(pk=fair_id)
 
     if fair.owner != request.user:
-        print("Edit - Fair is not owned by this person")
+        # print("Edit - Fair is not owned by this person")
         return redirect('fair_home')
 
     if request.method == "POST":
@@ -80,7 +76,7 @@ def edit(request, fair_id):
             messages.success(request, "Fair Updated Successfully")
             return redirect("fair_home")
         messages.error(request, form.errors)
-        return redirect("fair_edit")
+        return redirect("fair_home")
     else:
         context = {
             "fair": fair
