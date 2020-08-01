@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'fbztv2kyzy9ktwsnw*#r77@vuha49x(#qzjz%rwclto2b!2r=)'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -172,8 +172,8 @@ import django_heroku
 django_heroku.settings(locals())
 
 # Tracing Service
-epsagon.init(
-  token=os.environ['EPSAGON_TOKEN'],
-  app_name=os.environ['EPSAGON_APP_NAME'],
-  metadata_only=False,  # Optional, send more trace data
-)
+# epsagon.init(
+#   token=os.environ['EPSAGON_TOKEN'],
+#   app_name=os.environ['EPSAGON_APP_NAME'],
+#   metadata_only=False,  # Optional, send more trace data
+# )
