@@ -42,7 +42,7 @@ def index(request):
         "current_user_fairs": all_fairs,
     }
 
-    return render(request, "test.html", context)
+    return render(request, "all_fairs.html", context)
 
 
 def activate(request, fair_id):
