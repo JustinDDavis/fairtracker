@@ -21,26 +21,22 @@ def index(request):
     active_fair = Fair.objects.get(owner=request.user, active=True)
     participants = Participant.objects.filter(fair=active_fair).order_by(Lower("name"))
     
-    elapsed_time = time.time() - start_time
-    print(f"Report AF/Part: {str(elasped_time)}")
+    print(f"Report AF/Part: {str(time.time() - start_time)}")
 
     # Entries
     catalog = Catalog.objects.get(fair=active_fair, active=True)
     entries = Entry.objects.filter(catalog_item__catalog=catalog)
     
-    elapsed_time = time.time() - start_time
-    print(f"Report Catalog and entries: {str(elasped_time)}")
+    print(f"Report Catalog and entries: {str(time.time() - start_time)}")
 
     # Prizes
     judge_sheets = JudgeSheet.objects.filter(catalog_item__catalog=catalog)
     
-    elapsed_time = time.time() - start_time
-    print(f"Report Judgesheets: {str(elasped_time)}")
+    print(f"Report Judgesheets: {str(time.time() - start_time)}")
 
     processed_values = process_for_display(participants, entries, judge_sheets)
     
-    elapsed_time = time.time() - start_time
-    print(f"Report done processing: {str(elasped_time)}")
+    print(f"Report done processing: {str(time.time() - start_time)}")
 
     context = {
         "processed_values": processed_values
