@@ -12,20 +12,35 @@ from judge_sheet.models import JudgeSheet
 from entry.models import Entry
 from prize.models import Prize
 
+import time
 
 def index(request):
+    start_time = time.time()
+    # your code
     # Particpants
     active_fair = Fair.objects.get(owner=request.user, active=True)
     participants = Participant.objects.filter(fair=active_fair).order_by(Lower("name"))
+    
+    elapsed_time = time.time() - start_time
+    print(f"Report AF/Part: {str(elasped_time)}")
 
     # Entries
     catalog = Catalog.objects.get(fair=active_fair, active=True)
     entries = Entry.objects.filter(catalog_item__catalog=catalog)
+    
+    elapsed_time = time.time() - start_time
+    print(f"Report Catalog and entries: {str(elasped_time)}")
 
     # Prizes
     judge_sheets = JudgeSheet.objects.filter(catalog_item__catalog=catalog)
+    
+    elapsed_time = time.time() - start_time
+    print(f"Report Judgesheets: {str(elasped_time)}")
 
     processed_values = process_for_display(participants, entries, judge_sheets)
+    
+    elapsed_time = time.time() - start_time
+    print(f"Report done processing: {str(elasped_time)}")
 
     context = {
         "processed_values": processed_values
