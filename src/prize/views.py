@@ -43,8 +43,6 @@ def index(request):
     else:
         prizes = prizes.order_by(Lower("name"))
 
-    print(prizes)
-
     context = {
         "prizes": prizes,
         "catalog": current_catalog
