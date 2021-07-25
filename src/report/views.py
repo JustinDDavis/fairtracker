@@ -145,9 +145,9 @@ def report_full_fair(request):
     report_array[0][0] = "Catalog Item Names"
     for prize_name in matrix_map.keys():
         # I need to place at the dictionary value in this first row
-        print(f"temp-test: {prize_name}")
-        print(f"temp-test-matrix: {matrix_map[prize_name]}")
-        print(f"temp-test-length: {report_array[0]}")
+#         print(f"temp-test: {prize_name}")
+#         print(f"temp-test-matrix: {matrix_map[prize_name]}")
+#         print(f"temp-test-length: {report_array[0]}")
         report_array[0][matrix_map[prize_name]] = prize_name
 
 
