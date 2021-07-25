@@ -214,7 +214,6 @@ def process_for_display(participants, entries, judge_sheets):
                 })
 
         for calc_awards in new_data["awards"]:
-            print(calc_awards)
             new_data["calculated"].update({
                 "total_awarded": new_data["calculated"].get("total_awarded", 0) + calc_awards["prize_amount"]
             })
