@@ -11,7 +11,6 @@ from .forms import PrizeForm
 def index(request):
     active_fair = Fair.objects.get(owner=request.user, active=True)
     current_catalog = Catalog.objects.get(fair=active_fair, active=True)
-    print(current_catalog)
 
     if request.method == "POST":
         form = PrizeForm(request.POST)
@@ -42,8 +41,6 @@ def index(request):
             prizes = prizes.order_by("cast_amount")
     else:
         prizes = prizes.order_by(Lower("name"))
-
-    print(prizes)
 
     context = {
         "prizes": prizes,

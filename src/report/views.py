@@ -26,7 +26,6 @@ def index(request):
     judge_sheets = JudgeSheet.objects.filter(catalog_item__catalog=catalog)
 
     processed_values = process_for_display(participants, entries, judge_sheets)
-    print(processed_values)
 
     context = {
         "processed_values": processed_values
@@ -88,9 +87,7 @@ def report_export_entries(request):
 
     data = process_for_display(participants, entries, [])
 
-    print(data)
     for row in data["data"]:
-        print(row)
         for entry in row["entries"]:
             writer.writerow([active_fair.name,
                              row["participant"]["name"],
@@ -122,7 +119,6 @@ def report_full_fair(request):
     column_offset = 1
     for index, prize in enumerate(prizes):
         matrix_map[prize.name] = index + column_offset
-    print(matrix_map)
 
     # Get number of columns
     number_of_columns = len(matrix_map.keys()) + 1
@@ -157,8 +153,6 @@ def report_full_fair(request):
                 report_array[index+1][report_array_location] = judge_sheet.participant.name
             else:
                 report_array[index + 1][report_array_location] = report_array[index + 1][report_array_location] + " / " + judge_sheet.participant.name
-
-    print(report_array)
 
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="FairTracker_Full_Report.csv"'
@@ -227,7 +221,6 @@ def process_for_display(participants, entries, judge_sheets):
 
         return_object.append(new_data)
 
-    print(return_object)
     return {
         "data": return_object
     }

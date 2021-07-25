@@ -32,7 +32,6 @@ def index(request):
     # Table List
     # entries = Entry.entry_catalog_item.filter(catalog=catalog)
     entries = Entry.objects.filter(catalog_item__catalog=catalog)
-    print(entries)
 
     sort_column = request.GET.get('sort', '')
     if sort_column in ["participant", "-participant"]:
