@@ -139,7 +139,7 @@ def report_full_fair(request):
     print(f"number of columns: {number_of_columns}")
     print(f"number of rows: {number_of_rows}")
 
-    report_array = [["" for x in range(number_of_columns)] for y in range(number_of_rows)]
+    report_array = [["" for x in range(number_of_columns + 1)] for y in range(number_of_rows + 1)]
 
     # Populate Header:
     report_array[0][0] = "Catalog Item Names"
