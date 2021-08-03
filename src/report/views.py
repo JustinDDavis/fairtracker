@@ -15,28 +15,8 @@ from prize.models import Prize
 import time
 
 def index(request):
-    start_time = time.time()
-    # your code
-    # Particpants
-    active_fair = Fair.objects.get(owner=request.user, active=True)
-    participants = Participant.objects.filter(fair=active_fair).order_by(Lower("name"))
     
-    print(f"Report AF/Part: {str(time.time() - start_time)}")
-
-    # Entries
-    catalog = Catalog.objects.get(fair=active_fair, active=True)
-    entries = Entry.objects.filter(catalog_item__catalog=catalog)
-    
-    print(f"Report Catalog and entries: {str(time.time() - start_time)}")
-
-    # Prizes
-    judge_sheets = JudgeSheet.objects.filter(catalog_item__catalog=catalog)
-    
-    print(f"Report Judgesheets: {str(time.time() - start_time)}")
-
-    processed_values = process_for_display(participants, entries, judge_sheets)
-    
-    print(f"Report done processing: {str(time.time() - start_time)}")
+    processed_values = process_for_display_db(request.user)
 
     context = {
         "processed_values": processed_values
@@ -145,12 +125,10 @@ def report_full_fair(request):
     report_array[0][0] = "Catalog Item Names"
     for prize_name in matrix_map.keys():
         # I need to place at the dictionary value in this first row
-#         print(f"temp-test: {prize_name}")
-#         print(f"temp-test-matrix: {matrix_map[prize_name]}")
-#         print(f"temp-test-length: {report_array[0]}")
+        # print(f"temp-test: {prize_name}")
+        # print(f"temp-test-matrix: {matrix_map[prize_name]}")
+        # print(f"temp-test-length: {report_array[0]}")
         report_array[0][matrix_map[prize_name]] = prize_name
-
-
 
     # To through the Catalog Items
     # Get all the Judge sheets of this catalog item.
@@ -226,6 +204,63 @@ def process_for_display(participants, entries, judge_sheets):
                     "prize_name": judge_sheet.prize.name,
                     "prize_amount": judge_sheet.prize.amount
                 })
+
+        for calc_awards in new_data["awards"]:
+            new_data["calculated"].update({
+                "total_awarded": new_data["calculated"].get("total_awarded", 0) + calc_awards["prize_amount"]
+            })
+
+        return_object.append(new_data)
+
+    return {
+        "data": return_object
+    }
+
+def process_for_display_db(user):
+    start_time = time.time()
+    # your code
+    # Particpants
+    active_fair = Fair.objects.get(owner=user, active=True)
+    participants = Participant.objects.filter(fair=active_fair).order_by(Lower("name"))
+    catalog = Catalog.objects.get(fair=active_fair, active=True)
+
+    return_object = []
+
+    print(f"Report AF/Part: {str(time.time() - start_time)}")
+    for participant in participants:
+        new_data = {}
+        # Add Participant Data
+        new_data["participant"] = {
+            "name": participant.name,
+            "city": participant.city,
+            "email": participant.email,
+            "id": participant.id if not participant.static_participant_id else participant.static_participant_id
+        }
+        
+        new_data["entries"] = []
+        new_data["awards"] = []
+        new_data["calculated"] = {}
+
+        entries = Entry.objects.filter(catalog_item__catalog=catalog, participant=participant)
+        print(f"Report Catalog and entries: {str(time.time() - start_time)}")
+
+        for entry in entries:
+            # Add entries:
+            new_data["entries"].append({
+                "name": entry.catalog_item.name,
+                "description": entry.catalog_item.description
+            })
+
+        judge_sheets = JudgeSheet.objects.filter(catalog_item__catalog=catalog, participant=participant)
+
+        print(f"Report Judgesheets: {str(time.time() - start_time)}")
+
+        for judge_sheet in judge_sheets:
+            new_data["awards"].append({
+                "entry_name": judge_sheet.catalog_item.name,
+                "prize_name": judge_sheet.prize.name,
+                "prize_amount": judge_sheet.prize.amount
+            })
 
         for calc_awards in new_data["awards"]:
             new_data["calculated"].update({
