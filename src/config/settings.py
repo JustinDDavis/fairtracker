@@ -171,6 +171,8 @@ import django_heroku
 # Activate Django-Heroku.
 django_heroku.settings(locals())
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 # Tracing Service
 # epsagon.init(
 #   token=os.environ['EPSAGON_TOKEN'],
