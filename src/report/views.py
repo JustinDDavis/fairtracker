@@ -26,17 +26,18 @@ def index(request):
 
 def printer(request):
     # Particpants
-    active_fair = Fair.objects.get(owner=request.user, active=True)
-    participants = Participant.objects.filter(fair=active_fair).order_by(Lower("name"))
+    # active_fair = Fair.objects.get(owner=request.user, active=True)
+    # participants = Participant.objects.filter(fair=active_fair).order_by(Lower("name"))
 
-    # Entries
-    catalog = Catalog.objects.get(fair=active_fair, active=True)
-    entries = Entry.objects.filter(catalog_item__catalog=catalog)
+    # # Entries
+    # catalog = Catalog.objects.get(fair=active_fair, active=True)
+    # entries = Entry.objects.filter(catalog_item__catalog=catalog)
 
-    # Prizes
-    judge_sheets = JudgeSheet.objects.filter(catalog_item__catalog=catalog)
+    # # Prizes
+    # judge_sheets = JudgeSheet.objects.filter(catalog_item__catalog=catalog)
 
-    processed_values = process_for_display(participants, entries, judge_sheets)
+    # processed_values = process_for_display(participants, entries, judge_sheets)
+    processed_values = process_for_display_db(request.user)
 
     context = {
         "processed_values": processed_values
