@@ -166,10 +166,10 @@ if os.environ.get("DEBUG") != 'true':
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Hosting with Heroku
-import django_heroku
+import django_on_heroku
 
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+django_on_heroku.settings(locals())
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
